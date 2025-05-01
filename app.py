@@ -2,8 +2,16 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import json, os
 from nlp_web_search import run_pipeline_with_context
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 또는 ["https://your-netlify-site.netlify.app"] 로 제한 가능
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 CHAT_HISTORY_FILE = "chat_history.json"
 
 class ChatRequest(BaseModel):
